@@ -1,5 +1,3 @@
-package pieces;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -11,8 +9,13 @@ import board.Tile;
 
 public class Rook extends Piece{
 	
+	boolean isMoved;
+	
 	public Rook (Tile tile, boolean color, Board board) {
 		super(tile, color, board);
+		
+		isMoved = false;
+		
 		if (color) {
 			File image = new File("src/resources/WR.gif");
 	        try {

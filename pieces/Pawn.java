@@ -1,5 +1,3 @@
-package pieces;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -12,10 +10,12 @@ import board.Tile;
 public class Pawn extends Piece{
 	
 	boolean isMoved;
+	boolean twoPieceMove;
 	
 	public Pawn (Tile tile, boolean color, Board board) {
 		super(tile, color, board);
 		isMoved = false;
+		twoPieceMove = false;
 		if (color) {
 			File image = new File("src/resources/WP.gif");
 	        try {
@@ -40,57 +40,63 @@ public class Pawn extends Piece{
 		Tile currTile = this.getTile();
 		int currX = currTile.getX();
 		int currY = currTile.getY();
-		if(!isMoved) {
-			if(color) {
-				if(!board.getTile(currX, currY - 2).isOccupied()) {
-					moves.add(board.getTile(currX, currY - 2));
-				}
-				if(!board.getTile(currX, currY - 1).isOccupied()) {
-					moves.add(board.getTile(currX, currY - 1));
-				}
-				if(board.getTile(currX - 1, currY - 1).isOccupied() && board.getTile(currX - 1, currY - 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX - 1, currY - 1));
-				}
-				if(board.getTile(currX + 1, currY - 1).isOccupied() && board.getTile(currX + 1, currY - 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX + 1, currY - 1));
-				}
-			}else {
-				if(!board.getTile(currX, currY + 2).isOccupied()) {
-					moves.add(board.getTile(currX, currY + 2));
-				}
-				if(!board.getTile(currX, currY + 1).isOccupied()) {
-					moves.add(board.getTile(currX, currY + 1));
-				}
-				if(board.getTile(currX - 1, currY + 1).isOccupied() && board.getTile(currX - 1, currY + 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX - 1, currY + 1));
-				}
-				if(board.getTile(currX + 1, currY + 1).isOccupied() && board.getTile(currX + 1, currY + 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX + 1, currY + 1));
-				}
+		
+		if (color) {
+	
+			if (board.getTile(currX - 1, currY).getPiece() instanceof Pawn && 
+					board.getTile(currX - 1, currY).getPiece().color == !color &&
+					board.getTile(currX - 1, currY).getPiece().twoPieceMove) {
+				moves.add(board.getTile(currX - 1, currY - 1));
 			}
-		}else {
-			if(color) {
-				if(!board.getTile(currX, currY - 1).isOccupied()) {
-					moves.add(board.getTile(currX, currY - 1));
-				}
-				if(board.getTile(currX - 1, currY - 1).isOccupied() && board.getTile(currX - 1, currY - 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX - 1, currY - 1));
-				}
-				if(board.getTile(currX + 1, currY - 1).isOccupied() && board.getTile(currX + 1, currY - 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX + 1, currY - 1));
-				}
-			}else {
-				if(!board.getTile(currX, currY + 1).isOccupied()) {
-					moves.add(board.getTile(currX, currY + 1));
-				}
-				if(board.getTile(currX - 1, currY + 1).isOccupied() && board.getTile(currX - 1, currY + 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX - 1, currY + 1));
-				}
-				if(board.getTile(currX + 1, currY + 1).isOccupied() && board.getTile(currX + 1, currY + 1).getPiece().getColor() != this.color) {
-					moves.add(board.getTile(currX + 1, currY + 1));
-				}
+			
+			if (board.getTile(currX + 1, currY).getPiece() instanceof Pawn && 
+					board.getTile(currX + 1, currY).getPiece().color == !color &&
+					board.getTile(currX + 1, currY).getPiece().twoPieceMove) {
+				moves.add(board.getTile(currX + 1, currY - 1));
 			}
+			
+			if (!board.getTile(currX, currY - 2).isOccupied() && !isMoved)
+				moves.add(board.getTile(currX, currY - 2));
+				
+			if (!board.getTile(currX, currY - 1).isOccupied())
+				moves.add(board.getTile(currX, currY - 1));
+					
+			if (board.getTile(currX - 1, currY - 1).isOccupied() && board.getTile(currX - 1, currY - 1).getPiece().getColor() != this.color)
+				moves.add(board.getTile(currX - 1, currY - 1));
+					
+			if (board.getTile(currX + 1, currY - 1).isOccupied() && board.getTile(currX + 1, currY - 1).getPiece().getColor() != this.color)
+				moves.add(board.getTile(currX + 1, currY - 1));
+					
+		} else {
+			
+			if (board.getTile(currX - 1, currY).getPiece() instanceof Pawn && 
+					board.getTile(currX - 1, currY).getPiece().color == !color &&
+					board.getTile(currX - 1, currY).getPiece().twoPieceMove) {
+				moves.add(board.getTile(currX - 1, currY + 1));
+			}
+			
+			if (board.getTile(currX + 1, currY).getPiece() instanceof Pawn && 
+					board.getTile(currX + 1, currY).getPiece().color == !color &&
+					board.getTile(currX + 1, currY).getPiece().twoPieceMove) {
+				moves.add(board.getTile(currX + 1, currY + 1));
+			}
+			
+			if (!board.getTile(currX, currY + 2).isOccupied() && !isMoved)
+				moves.add(board.getTile(currX, currY + 2));
+
+			if (!board.getTile(currX, currY + 1).isOccupied())
+					moves.add(board.getTile(currX, currY + 1));
+					
+			if (board.getTile(currX - 1, currY + 1).isOccupied() && board.getTile(currX - 1, currY + 1).getPiece().getColor() != this.color)
+				moves.add(board.getTile(currX - 1, currY + 1));
+				
+			if(board.getTile(currX + 1, currY + 1).isOccupied() && board.getTile(currX + 1, currY + 1).getPiece().getColor() != this.color)
+				moves.add(board.getTile(currX + 1, currY + 1));
+				
 		}
+		
 		return moves;
+	
 	}
+
 }
