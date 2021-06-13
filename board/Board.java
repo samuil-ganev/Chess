@@ -14,17 +14,17 @@ public class Board {
 	public Board () {
 		for(int i = 0; i < 8; ++i) {
 			for(int j = 0; j < 2; ++j) {
-				tiles[j][i] = new OccupiedTile (j, i);
+				tiles[i][j] = new OccupiedTile (i, j);
 			}
 		}
 		for(int i = 0; i < 8; ++i) {
 			for(int j = 2; j < 6; ++j) {
-				tiles[j][i] = new EmptyTile (j, i);
+				tiles[i][j] = new EmptyTile (i, j);
 			}
 		}
 		for(int i = 0; i < 8; ++i) {
 			for(int j = 6; j < 8; ++j) {
-				tiles[j][i] = new OccupiedTile (j, i);
+				tiles[i][j] = new OccupiedTile (i, j);
 			}
 		}
 		Rook br1 = new Rook(tiles[0][0], false, this);
@@ -47,7 +47,7 @@ public class Board {
 		
 		for(int i = 0; i < 8; ++i) {
 			Pawn pawn = new Pawn(tiles[1][i], false, this);
-			tiles[1][i].setPiece(pawn);
+			tiles[i][1].setPiece(pawn);
 		}
 		
 		Rook wr1 = new Rook(tiles[7][0], true, this);
@@ -70,7 +70,7 @@ public class Board {
 		
 		for(int i = 0; i < 8; ++i) {
 			Pawn pawn = new Pawn(tiles[6][i], true, this);
-			tiles[6][i].setPiece(pawn);
+			tiles[i][6].setPiece(pawn);
 		}
 		
 	}
