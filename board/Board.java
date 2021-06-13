@@ -76,19 +76,19 @@ public class Board {
 	}
 	
 	public Tile getTile (int x, int y) {
-		return tiles[x][y];
+		return tiles[y][x];
 	}
 	
 	public void setTile (int x, int y, Tile tile) {
-		tiles[x][y] = tile;
+		tiles[y][x] = tile;
 	}
 	
 	public Piece getPiece (int x, int y) {
-		return tiles[x][y].getPiece();
+		return tiles[y][x].getPiece();
 	}
 	
 	public boolean isOccupied (int x, int y) {
-		return tiles[x][y].isOccupied();
+		return tiles[y][x].isOccupied();
 	}
 	
 	public boolean isTileUnderAttack (int x, int y, boolean color) {
