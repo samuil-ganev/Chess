@@ -1,3 +1,5 @@
+package pieces;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -9,13 +11,8 @@ import board.Tile;
 
 public class Rook extends Piece{
 	
-	boolean isMoved;
-	
-	public Rook (Tile tile, boolean color, Board board) {
-		super(tile, color, board);
-		
-		isMoved = false;
-		
+	public Rook (Tile tile, boolean color, Board board, String name) {
+		super(tile, color, board, name);
 		if (color) {
 			File image = new File("src/resources/WR.gif");
 	        try {
@@ -40,7 +37,7 @@ public class Rook extends Piece{
 		int thisY = thisTile.getY();
 		if (thisX != 0) { //move left
 			int currX = thisX - 1;
-			while (currX != 0) {
+			/*while (currX != 0) {
 				Tile currTile = board.getTile(currX, thisY);
 				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
 					moves.add(currTile);
@@ -48,11 +45,29 @@ public class Rook extends Piece{
 				}else {
 					break;
 				}
+			}*/
+			
+			while (true) {
+				
+				try {
+					
+					Tile currTile = board.getTile(currX, thisY);
+					
+					if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
+						
+						moves.add(currTile);
+						--currX;
+						
+					} else { break; }
+					
+				} catch (Exception e) { break; }
+				
 			}
+			
 		}
 		if (thisX != 7) { //move right
 			int currX = thisX + 1;
-			while (currX != 0) {
+			/*while (currX != 0) {
 				Tile currTile = board.getTile(currX, thisY);
 				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
 					moves.add(currTile);
@@ -60,11 +75,29 @@ public class Rook extends Piece{
 				}else {
 					break;
 				}
+			}*/
+			
+			while (true) {
+				
+				try {
+					
+					Tile currTile = board.getTile(currX, thisY);
+					
+					if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
+						
+						moves.add(currTile);
+						++currX;
+						
+					} else { break; }
+					
+				} catch (Exception e) { break; }
+				
 			}
+			
 		}
 		if (thisY != 0) { //move up
 			int currY = thisY - 1;
-			while (currY != 0) {
+			/*while (currY != 0) {
 				Tile currTile = board.getTile(thisX, currY);
 				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
 					moves.add(currTile);
@@ -72,20 +105,57 @@ public class Rook extends Piece{
 				}else {
 					break;
 				}
+			}*/
+			
+			while (true) {
+				
+				try {
+					
+					Tile currTile = board.getTile(thisX, currY);
+					
+					if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
+						
+						moves.add(currTile);
+						--currY;
+						
+					} else { break; }
+					
+				} catch (Exception e) { break; }
+				
 			}
+			
 		}
 		if (thisY != 7) { //move down
 			int currY = thisY + 1;
-			while (currY != 7) {
+			/*while (currY != 7) {
 				Tile currTile = board.getTile(thisX, currY);
 				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
 					moves.add(currTile);
 					++currY;
 				}else {
-					break;
+					kiro a break;
 				}
+			}*/
+			
+			while (true) {
+				
+				try {
+					
+					Tile currTile = board.getTile(thisX, currY);
+					
+					if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
+						
+						moves.add(currTile);
+						++currY;
+						
+					} else { break; }
+					
+				} catch (Exception e) { break; }
+				
 			}
+			
 		}
 		return moves;
 	}
+	
 }

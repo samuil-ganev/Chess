@@ -7,15 +7,17 @@ import board.Board;
 import board.Tile;
 
 public abstract class Piece {
+	public String name;
 	Tile tile;
 	boolean color;
 	Board board;
 	Image img;
 
-	public Piece(Tile tile, boolean color, Board board) {
+	public Piece(Tile tile, boolean color, Board board, String name) {
 		this.tile = tile;
 		this.color = color;
 		this.board = board;
+		this.name = name;
 	}
 	
 	public boolean getColor() {

@@ -1,3 +1,5 @@
+package pieces;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -12,8 +14,8 @@ public class Pawn extends Piece{
 	boolean isMoved;
 	boolean twoPieceMove;
 	
-	public Pawn (Tile tile, boolean color, Board board) {
-		super(tile, color, board);
+	public Pawn (Tile tile, boolean color, Board board, String name) {
+		super(tile, color, board, name);
 		isMoved = false;
 		twoPieceMove = false;
 		if (color) {
@@ -38,60 +40,109 @@ public class Pawn extends Piece{
 	public HashSet<Tile> allowedMoves () {
 		HashSet<Tile> moves = new HashSet<Tile> ();
 		Tile currTile = this.getTile();
+		
 		int currX = currTile.getX();
 		int currY = currTile.getY();
 		
 		if (color) {
+			
+			try {
 	
-			if (board.getTile(currX - 1, currY).getPiece() instanceof Pawn && 
+				if (board.getTile(currX - 1, currY).getPiece() instanceof Pawn && 
 					board.getTile(currX - 1, currY).getPiece().color == !color &&
-					board.getTile(currX - 1, currY).getPiece().twoPieceMove) {
-				moves.add(board.getTile(currX - 1, currY - 1));
-			}
+					twoPieceMove) {
+					moves.add(board.getTile(currX - 1, currY - 1));
+				}
 			
-			if (board.getTile(currX + 1, currY).getPiece() instanceof Pawn && 
+			} catch (Exception e) {}
+			
+			try {
+			
+				if (board.getTile(currX + 1, currY).getPiece() instanceof Pawn && 
 					board.getTile(currX + 1, currY).getPiece().color == !color &&
-					board.getTile(currX + 1, currY).getPiece().twoPieceMove) {
-				moves.add(board.getTile(currX + 1, currY - 1));
-			}
+					twoPieceMove) {
+					moves.add(board.getTile(currX + 1, currY - 1));
+				}
 			
-			if (!board.getTile(currX, currY - 2).isOccupied() && !isMoved)
-				moves.add(board.getTile(currX, currY - 2));
+			} catch (Exception e) {}
+			
+			try {
+			
+				if (!board.getTile(currX, currY - 2).isOccupied() && !isMoved)
+					moves.add(board.getTile(currX, currY - 2));
+			
+			} catch (Exception e) {}
+			
+			try {
 				
-			if (!board.getTile(currX, currY - 1).isOccupied())
-				moves.add(board.getTile(currX, currY - 1));
+				if (!board.getTile(currX, currY - 1).isOccupied())
+					moves.add(board.getTile(currX, currY - 1));
+			
+			} catch (Exception e) {}
+			
+			try {
 					
-			if (board.getTile(currX - 1, currY - 1).isOccupied() && board.getTile(currX - 1, currY - 1).getPiece().getColor() != this.color)
-				moves.add(board.getTile(currX - 1, currY - 1));
+				if (board.getTile(currX - 1, currY - 1).isOccupied() && board.getTile(currX - 1, currY - 1).getPiece().getColor() != this.color)
+					moves.add(board.getTile(currX - 1, currY - 1));
+			
+			} catch (Exception e) {}
+			
+			try {
 					
-			if (board.getTile(currX + 1, currY - 1).isOccupied() && board.getTile(currX + 1, currY - 1).getPiece().getColor() != this.color)
-				moves.add(board.getTile(currX + 1, currY - 1));
+				if (board.getTile(currX + 1, currY - 1).isOccupied() && board.getTile(currX + 1, currY - 1).getPiece().getColor() != this.color)
+					moves.add(board.getTile(currX + 1, currY - 1));
+				
+			} catch (Exception e) {}
 					
 		} else {
+		
+		try {
 			
 			if (board.getTile(currX - 1, currY).getPiece() instanceof Pawn && 
 					board.getTile(currX - 1, currY).getPiece().color == !color &&
-					board.getTile(currX - 1, currY).getPiece().twoPieceMove) {
+					twoPieceMove) {
 				moves.add(board.getTile(currX - 1, currY + 1));
 			}
 			
+		} catch (Exception e) {}
+		
+		try {
+			
 			if (board.getTile(currX + 1, currY).getPiece() instanceof Pawn && 
 					board.getTile(currX + 1, currY).getPiece().color == !color &&
-					board.getTile(currX + 1, currY).getPiece().twoPieceMove) {
+					twoPieceMove) {
 				moves.add(board.getTile(currX + 1, currY + 1));
 			}
+			
+		} catch (Exception e) {}
+		
+		try {
 			
 			if (!board.getTile(currX, currY + 2).isOccupied() && !isMoved)
 				moves.add(board.getTile(currX, currY + 2));
+		
+		} catch (Exception e) {}
+		
+		try {
 
 			if (!board.getTile(currX, currY + 1).isOccupied())
 					moves.add(board.getTile(currX, currY + 1));
+			
+		} catch (Exception e) {}
+		
+		try {
 					
 			if (board.getTile(currX - 1, currY + 1).isOccupied() && board.getTile(currX - 1, currY + 1).getPiece().getColor() != this.color)
 				moves.add(board.getTile(currX - 1, currY + 1));
+		
+		} catch (Exception e) {}
+		
+		try {
 				
 			if(board.getTile(currX + 1, currY + 1).isOccupied() && board.getTile(currX + 1, currY + 1).getPiece().getColor() != this.color)
 				moves.add(board.getTile(currX + 1, currY + 1));
+		
+		} catch (Exception e) {}
 				
 		}
 		
