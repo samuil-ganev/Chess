@@ -51,17 +51,6 @@ public class Bishop extends Piece {
 			int xCount = thisX - 1;
 			int yCount = thisY - 1;
 			
-			/*while (xCount != 0 && yCount != 0) {
-				Tile currTile = board.getTile(xCount, yCount);
-				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
-					moves.add(currTile);
-					--xCount;
-					--yCount;
-				} else {
-					break;
-				}
-			}*/
-			
 			while (true) {
 				
 				try {
@@ -73,6 +62,10 @@ public class Bishop extends Piece {
 						moves.add(currTile);
 						--xCount;
 						--yCount;
+						
+						if (!(currTile instanceof EmptyTile))
+							if (currTile.getPiece().getColor() != this.color)
+								break;
 						
 					} else { break; }
 					
@@ -84,16 +77,6 @@ public class Bishop extends Piece {
 		if (thisX != 0 && thisY != 7) { // move down left
 			int xCount = thisX - 1;
 			int yCount = thisY + 1;
-//			while (xCount != 0 && yCount != 7) {
-//				Tile currTile = board.getTile(xCount, yCount);
-//				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
-//					moves.add(currTile);
-//					--xCount;
-//					++yCount;
-//				} else {
-//					break;
-//				}
-//			}
 			
 			while (true) {
 				
@@ -107,6 +90,10 @@ public class Bishop extends Piece {
 						--xCount;
 						++yCount;
 						
+						if (!(currTile instanceof EmptyTile))
+							if (currTile.getPiece().getColor() != this.color)
+								break;
+						
 					} else { break; }
 					
 				} catch (Exception e) { break; }
@@ -117,16 +104,6 @@ public class Bishop extends Piece {
 		if (thisX != 7 && thisY != 7) {// move down right
 			int xCount = thisX + 1;
 			int yCount = thisY + 1;
-//			while (xCount != 7 && yCount != 7) {
-//				Tile currTile = board.getTile(xCount, yCount);
-//				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
-//					moves.add(currTile);
-//					++xCount;
-//					++yCount;
-//				} else {
-//					break;
-//				}
-//			}
 			
 			while (true) {
 				
@@ -140,6 +117,10 @@ public class Bishop extends Piece {
 						++xCount;
 						++yCount;
 						
+						if (!(currTile instanceof EmptyTile))
+							if (currTile.getPiece().getColor() != this.color)
+								break;
+						
 					} else { break; }
 					
 				} catch (Exception e) { break; }
@@ -150,16 +131,6 @@ public class Bishop extends Piece {
 		if (thisX != 7 && thisY != 0) {// move up right
 			int xCount = thisX + 1;
 			int yCount = thisY - 1;
-//			while (xCount != 7 && yCount != 0) {
-//				Tile currTile = board.getTile(xCount, yCount);
-//				if (!currTile.isOccupied() || (currTile.isOccupied() && currTile.getPiece().getColor() != this.color)) {
-//					moves.add(currTile);
-//					++xCount;
-//					--yCount;
-//				} else {
-//					break;
-//				}
-//			}
 			
 			while (true) {
 				
@@ -173,6 +144,10 @@ public class Bishop extends Piece {
 						++xCount;
 						--yCount;
 						
+						if (!(currTile instanceof EmptyTile))
+							if (currTile.getPiece().getColor() != this.color)
+								break;
+						
 					} else { break; }
 					
 				} catch (Exception e) { break; }
@@ -180,7 +155,9 @@ public class Bishop extends Piece {
 			}
 			
 		}
+		
 		return moves;
+		
 	}
 
 }
