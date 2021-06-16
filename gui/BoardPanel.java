@@ -10,9 +10,16 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.JPanel;
 
 import board.Board;
@@ -24,12 +31,14 @@ import pieces.Piece;
 public class BoardPanel extends JPanel{
 	
 	boolean whiteOnTurn = true;
-	
+	String SOUND_PATH = "src/resources/move_sound.wav";
 	int margin = 10;
 	double imageRatio = 0.9;
 	int squareSide = (this.getWidth() - 2 * margin) / 8;
 	Piece selectedPiece = null;
 	boolean isSelected = false;
+	int selectedImageX;
+	int selectedImageY;
 	Board board;
 	Color dark = new Color (224, 123, 57);
 	Color light = new Color (235, 139, 66);
@@ -42,6 +51,66 @@ public class BoardPanel extends JPanel{
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				x = getSquareIndex(x);
+				y = getSquareIndex(y);
+				Tile currTile = board.getTile(x, y);
+				if (isSelected) {
+					if (selectedPiece.allowedMoves().contains(currTile)) {
+						Tile newTile = new OccupiedTile(x, y);
+						
+						if (whiteOnTurn != selectedPiece.getColor()) {
+							return;
+						}
+							
+						
+						newTile.setPiece(selectedPiece);
+						Tile oldTile = selectedPiece.getTile();
+						board.setTile(oldTile.getX(), oldTile.getY(), new EmptyTile(oldTile.getX(), oldTile.getY()));
+						selectedPiece.setTile(newTile);
+						board.setTile(x, y, newTile);
+						
+						whiteOnTurn = !whiteOnTurn;
+						
+						try {
+							
+//						    File audioFile = new File(SOUND_PATH);
+//						     
+//						    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+//						    
+//						    	
+//						    AudioFormat format = audioStream.getFormat();
+//						     
+//						    DataLine.Info info = new DataLine.Info(Clip.class, format);
+//						    
+//						    	
+//						    Clip audioClip = (Clip) AudioSystem.getLine(info);
+//						   
+//						    	
+//						    audioClip.open(audioStream);
+//						    audioClip.start();
+//						    
+//							
+//						    audioClip.close();
+//						    audioStream.close();
+							
+							File file = new File(SOUND_PATH);
+							  AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+							  Clip clip = AudioSystem.getClip();
+							  clip.open(audioStream);
+							  clip.start();
+						    
+						    
+						} catch (Exception er) {
+							er.printStackTrace();
+						}
+						
+					}
+					isSelected = !isSelected;
+					
+				}
+				repaint();
 			}
 			
 			@Override
@@ -68,34 +137,17 @@ public class BoardPanel extends JPanel{
 				int y = e.getY();
 				x = getSquareIndex(x);
 				y = getSquareIndex(y);
-				System.out.println(x + " " + y);
 				
 				Tile currTile = board.getTile(x, y);
 				if (!isSelected && currTile.isOccupied()) {
 					selectedPiece = currTile.getPiece();
-					isSelected = !isSelected;
-					System.out.println(selectedPiece.allowedMoves().toString());
-				} else if (isSelected) {
-					System.out.println(selectedPiece.allowedMoves().toString());
-					if (selectedPiece.allowedMoves().contains(currTile)) {
-						Tile newTile = new OccupiedTile(x, y);
-						
-						if (whiteOnTurn != selectedPiece.getColor())
-							return;
-						
-						newTile.setPiece(selectedPiece);
-						Tile oldTile = selectedPiece.getTile();
-						board.setTile(oldTile.getX(), oldTile.getY(), new EmptyTile(oldTile.getX(), oldTile.getY()));
-						selectedPiece.setTile(newTile);
-						board.setTile(x, y, newTile);
-						
-						whiteOnTurn = !whiteOnTurn;
-						
+					if (selectedPiece.getColor() == whiteOnTurn) {
+						isSelected = !isSelected;
+						selectedImageX = e.getX()- squareSide/4 - margin;
+						selectedImageY = e.getY()- squareSide/4 - margin;
 					}
-					isSelected = !isSelected;
-				}
-				
-				
+					
+				} 
 				repaint();
 			}
 		});
@@ -110,8 +162,13 @@ public class BoardPanel extends JPanel{
 			
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				
-				
+				if (isSelected ) {
+					selectedImageX = e.getX() - squareSide/4 - margin;
+					selectedImageY = e.getY() - squareSide/4 - margin;
+					repaint();
+
+				}
+								
 			}
 			
 		});
@@ -119,15 +176,28 @@ public class BoardPanel extends JPanel{
 	}
 	
 	private void drawPieces (Graphics g) {
+		if (isSelected) {
+			Image selectedImg = selectedPiece.getImage();
+			Image newSelectedImg = selectedImg.getScaledInstance((int) (imageRatio * squareSide), (int) (imageRatio * squareSide), Image.SCALE_DEFAULT);
+			g.drawImage(newSelectedImg, selectedImageX, selectedImageY, this);
+		}
+		
 		
 		for (int i = 0; i < 8; ++i ) {
 		
 			for (int j = 0; j < 8; ++j) {
 			
 				if (board.getTile(i, j).isOccupied()) {
+					if (isSelected && board.getPiece(i, j)  == selectedPiece) {
+						continue;
+					}
+					if (!isSelected && board.getPiece(i, j)  == selectedPiece) {
+						Image img1 = board.getPiece(i, j).getImage();
+						Image newImg1 = img1.getScaledInstance((int) (imageRatio * squareSide), (int) (imageRatio * squareSide), Image.SCALE_DEFAULT);
+						g.drawImage(newImg1, margin + i * squareSide, margin + j * squareSide, this);
+						
+					}
 					
-					//System.out.println(board.getPiece(i, j).name + " " + i + " " + j);
-				
 					Image img = board.getPiece(i, j).getImage();
 					Image newImg = img.getScaledInstance((int) (imageRatio * squareSide), (int) (imageRatio * squareSide), Image.SCALE_DEFAULT);
 					g.drawImage(newImg, margin + i * squareSide, margin + j * squareSide, this);
