@@ -31,7 +31,8 @@ import pieces.Piece;
 public class BoardPanel extends JPanel{
 	
 	boolean whiteOnTurn = true;
-	String SOUND_PATH = "src/resources/move_sound.wav";
+	String MOVE_PATH = "src/resources/sfx/move_sound.wav";
+	String CAPTURE_PATH = "src/resources/sfx/capture_sound.wav";
 	int margin = 10;
 	double imageRatio = 0.9;
 	int squareSide = (this.getWidth() - 2 * margin) / 8;
@@ -56,6 +57,7 @@ public class BoardPanel extends JPanel{
 				x = getSquareIndex(x);
 				y = getSquareIndex(y);
 				Tile currTile = board.getTile(x, y);
+				boolean isOccupied = currTile.isOccupied();
 				if (isSelected) {
 					if (selectedPiece.allowedMoves().contains(currTile)) {
 						Tile newTile = new OccupiedTile(x, y);
@@ -72,40 +74,27 @@ public class BoardPanel extends JPanel{
 						board.setTile(x, y, newTile);
 						
 						whiteOnTurn = !whiteOnTurn;
-						
-						try {
-							
-//						    File audioFile = new File(SOUND_PATH);
-//						     
-//						    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-//						    
-//						    	
-//						    AudioFormat format = audioStream.getFormat();
-//						     
-//						    DataLine.Info info = new DataLine.Info(Clip.class, format);
-//						    
-//						    	
-//						    Clip audioClip = (Clip) AudioSystem.getLine(info);
-//						   
-//						    	
-//						    audioClip.open(audioStream);
-//						    audioClip.start();
-//						    
-//							
-//						    audioClip.close();
-//						    audioStream.close();
-							
-							File file = new File(SOUND_PATH);
-							  AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-							  Clip clip = AudioSystem.getClip();
-							  clip.open(audioStream);
-							  clip.start();
-						    
-						    
-						} catch (Exception er) {
-							er.printStackTrace();
+						if (isOccupied) {
+							try {
+								File file = new File(CAPTURE_PATH);
+								AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+								Clip clip = AudioSystem.getClip();
+								clip.open(audioStream);
+								clip.start();
+							} catch (Exception er) {
+								er.printStackTrace();
+							}
+						} else {
+							try {
+								File file = new File(MOVE_PATH);
+								AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+								Clip clip = AudioSystem.getClip();
+								clip.open(audioStream);
+								clip.start();
+							} catch (Exception er) {
+								er.printStackTrace();
+							}
 						}
-						
 					}
 					isSelected = !isSelected;
 					
