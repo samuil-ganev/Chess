@@ -17,7 +17,7 @@ public class Bishop extends Piece {
 	public Bishop(Tile tile, boolean color, Board board, String name) {
 		super(tile, color, board, name);
 		if (color) {
-			File image = new File("src/resources/WB.gif");
+			File image = new File("src/resources/images/WB.gif");
 			try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {
@@ -25,7 +25,7 @@ public class Bishop extends Piece {
 				e.printStackTrace();
 			}
 		} else {
-			File image = new File("src/resources/BB.gif");
+			File image = new File("src/resources/images/BB.gif");
 			try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {

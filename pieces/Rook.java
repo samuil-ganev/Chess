@@ -14,14 +14,14 @@ public class Rook extends Piece{
 	public Rook (Tile tile, boolean color, Board board, String name) {
 		super(tile, color, board, name);
 		if (color) {
-			File image = new File("src/resources/WR.gif");
+			File image = new File("src/resources/images/WR.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			File image = new File("src/resources/BR.gif");
+			File image = new File("src/resources/images/BR.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {

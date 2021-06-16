@@ -73,11 +73,7 @@ public class BoardPanel extends JPanel{
 						selectedPiece.setTile(newTile);
 						board.setTile(x, y, newTile);
 						
-						if (!board.getPiece(x, y).isMoved)
-							board.getPiece(x, y).isMoved = true;
-						
 						whiteOnTurn = !whiteOnTurn;
-						
 						if (isOccupied) {
 							try {
 								File file = new File(CAPTURE_PATH);
@@ -173,6 +169,12 @@ public class BoardPanel extends JPanel{
 			Image selectedImg = selectedPiece.getImage();
 			Image newSelectedImg = selectedImg.getScaledInstance((int) (imageRatio * squareSide), (int) (imageRatio * squareSide), Image.SCALE_DEFAULT);
 			g.drawImage(newSelectedImg, selectedImageX, selectedImageY, this);
+			for (Tile tile : selectedPiece.allowedMoves()) {
+				int x = tile.getX();
+				int y = tile.getY();
+				g.setColor(Color.RED);
+				g.fillOval(x * squareSide + margin + squareSide/4, y * squareSide + margin + squareSide/4, (int)(0.4 * squareSide),(int)(0.4 * squareSide));
+			}
 		}
 		
 		

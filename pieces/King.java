@@ -20,7 +20,7 @@ public class King extends Piece {
 		isMoved = false;
 		
 		if (color) {
-			File image = new File("resources/WK.gif");
+			File image = new File("src/resources/images/WK.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {
@@ -28,7 +28,7 @@ public class King extends Piece {
 				e.printStackTrace();
 			}
 		} else {
-			File image = new File("resources/BK.gif");
+			File image = new File("src/resources/images/BK.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {

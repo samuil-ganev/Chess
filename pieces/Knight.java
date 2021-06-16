@@ -14,7 +14,7 @@ public class Knight extends Piece{
 	public Knight (Tile tile, boolean color, Board board, String name) {
 		super(tile, color, board, name);
 		if (color) {
-			File image = new File("src/resources/WN.gif");
+			File image = new File("src/resources/images/WN.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {
@@ -22,7 +22,7 @@ public class Knight extends Piece{
 				e.printStackTrace();
 			}
 		} else {
-			File image = new File("src/resources/BN.gif");
+			File image = new File("src/resources/images/BN.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {

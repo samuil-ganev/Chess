@@ -19,7 +19,7 @@ public class Pawn extends Piece{
 		isMoved = false;
 		twoPieceMove = false;
 		if (color) {
-			File image = new File("src/resources/WP.gif");
+			File image = new File("src/resources/images/WP.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {
@@ -27,7 +27,7 @@ public class Pawn extends Piece{
 				e.printStackTrace();
 			}
 		} else {
-			File image = new File("src/resources/BP.gif");
+			File image = new File("src/resources/images/BP.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {

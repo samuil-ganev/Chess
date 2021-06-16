@@ -14,7 +14,7 @@ public class Queen extends Piece{
 	public Queen (Tile tile, boolean color, Board board, String name) {
 		super(tile, color, board, name);
 		if (color) {
-			File image = new File("src/resources/WQ.gif");
+			File image = new File("src/resources/images/WQ.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {
@@ -22,7 +22,7 @@ public class Queen extends Piece{
 				e.printStackTrace();
 			}
 		} else {
-			File image = new File("src/resources/BQ.gif");
+			File image = new File("src/resources/images/BQ.gif");
 	        try {
 				img = ImageIO.read(image);
 			} catch (IOException e) {
