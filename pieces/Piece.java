@@ -12,12 +12,14 @@ public abstract class Piece {
 	boolean color;
 	Board board;
 	Image img;
+	public boolean isMoved;
 
 	public Piece(Tile tile, boolean color, Board board, String name) {
 		this.tile = tile;
 		this.color = color;
 		this.board = board;
 		this.name = name;
+		this.isMoved = false;
 	}
 	
 	public boolean getColor() {
