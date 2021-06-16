@@ -92,16 +92,26 @@ public class Board {
 	}
 	
 	public boolean isTileUnderAttack (int x, int y, boolean color) {
-		for(int i = 0; i < 8; ++i) {
-			for(int j = 0; j < 8; ++j) {
-				if(tiles[i][j].isOccupied() && !color) {
+		
+		for (int i = 0; i < 8; ++i) {
+		
+			for (int j = 0; j < 8; ++j) {
+			
+				if (tiles[i][j].isOccupied() && tiles[i][j].getPiece().getColor() != color) {
+				
 					Piece currPiece = tiles[i][j].getPiece();
-					if(currPiece.allowedMoves().contains(tiles[i][j])) {
+					
+					if (currPiece.allowedMoves().contains(tiles[y][x]))
 						return true;
-					}
+						
 				}
+				
 			}
+			
 		}
+		
 		return false;
+	
 	}
+
 }
