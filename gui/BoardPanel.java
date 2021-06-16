@@ -73,7 +73,11 @@ public class BoardPanel extends JPanel{
 						selectedPiece.setTile(newTile);
 						board.setTile(x, y, newTile);
 						
+						if (!board.getPiece(x, y).isMoved)
+							board.getPiece(x, y).isMoved = true;
+						
 						whiteOnTurn = !whiteOnTurn;
+						
 						if (isOccupied) {
 							try {
 								File file = new File(CAPTURE_PATH);
