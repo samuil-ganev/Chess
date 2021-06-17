@@ -66,12 +66,107 @@ public class BoardPanel extends JPanel{
 							return;
 						}
 							
+						if (selectedPiece.name == "b_king" || selectedPiece.name == "w_king" && !selectedPiece.isMoved) {
+							
+							if (selectedPiece.getColor()) {
+								
+								if (x == 1) {
+									
+									Tile newTile2 = new OccupiedTile(2, 7);
+									Piece rook = board.getPiece(0, 7);
+									newTile2.setPiece(rook);
+									board.setTile(0, 7, new EmptyTile(0, 7));
+									rook.setTile(newTile2);
+									board.setTile(2, 7, newTile2);
+									
+								} else if (x == 6) {
+									
+									Tile newTile2 = new OccupiedTile(5, 7);
+									Piece rook = board.getPiece(7, 7);
+									newTile2.setPiece(rook);
+									board.setTile(7, 7, new EmptyTile(7, 7));
+									rook.setTile(newTile2);
+									board.setTile(5, 7, newTile2);
+									
+								}
+								
+							} else {
+								
+								if (x == 1) {
+									
+									Tile newTile2 = new OccupiedTile(2, 0);
+									Piece rook = board.getPiece(0, 0);
+									newTile2.setPiece(rook);
+									board.setTile(0, 7, new EmptyTile(0, 0));
+									rook.setTile(newTile2);
+									board.setTile(2, 0, newTile2);
+									
+								} else if (x == 6) {
+									
+									Tile newTile2 = new OccupiedTile(5, 0);
+									Piece rook = board.getPiece(7, 0);
+									newTile2.setPiece(rook);
+									board.setTile(7, 0, new EmptyTile(7, 0));
+									rook.setTile(newTile2);
+									board.setTile(5, 0, newTile2);
+									
+								}
+								
+							}
+							
+						}
 						
 						newTile.setPiece(selectedPiece);
 						Tile oldTile = selectedPiece.getTile();
 						board.setTile(oldTile.getX(), oldTile.getY(), new EmptyTile(oldTile.getX(), oldTile.getY()));
 						selectedPiece.setTile(newTile);
 						board.setTile(x, y, newTile);
+						
+						// Pawn to Queen
+						
+						for (int i=0;i<8;++i) {
+							
+							// White pieces
+							
+							if (board.isOccupied(i, 0)) {
+								
+								Piece piece = board.getPiece(i, 0);
+								
+								if (piece.getColor() && piece instanceof Pawn) {
+									
+									Tile newTile2 = new OccupiedTile(i, 0);
+									Piece pawn = new Queen(newTile2, true, board, "w_queen");
+									newTile2.setPiece(pawn);
+									pawn.setTile(newTile2);
+									board.setTile(i, 0, newTile2);
+									
+								}
+								
+							}
+							
+						}
+						
+						for (int i=0;i<8;++i) {
+							
+							// Black pieces
+							
+							if (board.isOccupied(i, 7)) {
+								
+								Piece piece = board.getPiece(i, 7);
+								
+								if (!piece.getColor() && piece instanceof Pawn) {
+									
+									Tile newTile2 = new OccupiedTile(i, 7);
+									Piece pawn = new Queen(newTile2, false, board, "b_queen");
+									newTile2.setPiece(pawn);
+									pawn.setTile(newTile2);
+									board.setTile(i, 7, newTile2);
+									
+								}
+								
+							}
+							
+						}
 						
 						if (!board.getPiece(x, y).isMoved) {
 							board.getPiece(x, y).isMoved = true;
