@@ -38,6 +38,82 @@ public class King extends Piece {
 		}
 	}
 	
+	public boolean isCastelingPossible(boolean color, boolean type) {
+		
+		if (!type) {
+			
+			if (color) {
+				
+				if (!board.getPiece(0, 7).isMoved) {
+					
+					for (int i=1;i<4;++i) {
+						
+						if (board.getTile(i, 7).isOccupied())
+							return false;
+						
+					}
+					
+					return true;
+					
+				}
+				
+			} else {
+				
+				if (!board.getPiece(0, 0).isMoved) {
+					
+					for (int i=1;i<4;++i) {
+						
+						if (board.getTile(i, 0).isOccupied())
+							return false;
+						
+					}
+					
+					return true;
+					
+				}
+				
+			}
+			
+		} else {
+			
+			if (color) {
+				
+				if (!board.getPiece(7, 7).isMoved) {
+					
+					for (int i=1;i<3;++i) {
+						
+						if (board.getTile(7-i, 7).isOccupied())
+							return false;
+						
+					}
+					
+					return true;
+					
+				}
+				
+			} else {
+				
+				if (!board.getPiece(7, 0).isMoved) {
+					
+					for (int i=1;i<3;++i) {
+						
+						if (board.getTile(7-i, 0).isOccupied())
+							return false;
+						
+					}
+					
+					return true;
+					
+				}
+				
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
 	public HashSet<Tile> allowedMoves() {
 		
 		HashSet<Tile> moves = new HashSet<Tile>();
@@ -62,7 +138,23 @@ public class King extends Piece {
 		
 		if (!isMoved) {
 			
-			//TODO
+			if (isCastelingPossible(this.color, false)) {
+				
+				if (this.color)
+					moves.add(board.getTile(1, 7));
+				else
+					moves.add(board.getTile(1, 0));
+				
+			}
+			
+			if (isCastelingPossible(this.color, true)) {
+				
+				if (this.color)
+					moves.add(board.getTile(6, 7));
+				else
+					moves.add(board.getTile(6, 0));
+				
+			}
 			
 		}
 		
