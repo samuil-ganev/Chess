@@ -73,6 +73,10 @@ public class BoardPanel extends JPanel{
 						selectedPiece.setTile(newTile);
 						board.setTile(x, y, newTile);
 						
+						if (!board.getPiece(x, y).isMoved) {
+							board.getPiece(x, y).isMoved = true;
+						}
+						
 						whiteOnTurn = !whiteOnTurn;
 						if (isOccupied) {
 							try {
@@ -166,15 +170,16 @@ public class BoardPanel extends JPanel{
 	
 	private void drawPieces (Graphics g) {
 		if (isSelected) {
-			Image selectedImg = selectedPiece.getImage();
-			Image newSelectedImg = selectedImg.getScaledInstance((int) (imageRatio * squareSide), (int) (imageRatio * squareSide), Image.SCALE_DEFAULT);
-			g.drawImage(newSelectedImg, selectedImageX, selectedImageY, this);
 			for (Tile tile : selectedPiece.allowedMoves()) {
 				int x = tile.getX();
 				int y = tile.getY();
-				g.setColor(Color.RED);
-				g.fillOval(x * squareSide + margin + squareSide/4, y * squareSide + margin + squareSide/4, (int)(0.4 * squareSide),(int)(0.4 * squareSide));
+				g.setColor(new Color(0, 0, 0, 75));
+				g.fillOval(x * squareSide + margin + (int)(0.3 * squareSide), y * squareSide + margin + (int)(0.3 * squareSide), (int)(0.4 * squareSide),(int)(0.4 * squareSide));
 			}
+			Image selectedImg = selectedPiece.getImage();
+			Image newSelectedImg = selectedImg.getScaledInstance((int) (imageRatio * squareSide), (int) (imageRatio * squareSide), Image.SCALE_DEFAULT);
+			g.drawImage(newSelectedImg, selectedImageX, selectedImageY, this);
+			
 		}
 		
 		
@@ -207,6 +212,10 @@ public class BoardPanel extends JPanel{
 	
 	private int getSquareIndex (int dimension) {
 		return (dimension - margin)/squareSide;
+	}
+	
+	public boolean isWhiteOnTurn () {
+		return whiteOnTurn;
 	}
 	
 	@Override
