@@ -56,7 +56,13 @@ public class BoardPanel extends JPanel{
 				int y = e.getY();
 				x = getSquareIndex(x);
 				y = getSquareIndex(y);
-				Tile currTile = board.getTile(x, y);
+				
+				Tile currTile;
+				
+				try {
+					currTile = board.getTile(x, y);
+				} catch (Exception e2) { return; }
+				
 				boolean isOccupied = currTile.isOccupied();
 				if (isSelected) {
 					if (selectedPiece.allowedMoves().contains(currTile)) {
@@ -226,18 +232,29 @@ public class BoardPanel extends JPanel{
 				x = getSquareIndex(x);
 				y = getSquareIndex(y);
 				
-				Tile currTile = board.getTile(x, y);
-				if (!isSelected && currTile.isOccupied()) {
-					selectedPiece = currTile.getPiece();
-					if (selectedPiece.getColor() == whiteOnTurn) {
-						isSelected = !isSelected;
-						selectedImageX = e.getX()- squareSide/4 - margin;
-						selectedImageY = e.getY()- squareSide/4 - margin;
+				try {
+				
+					Tile currTile = board.getTile(x, y);
+					
+					if (!isSelected && currTile.isOccupied()) {
+						
+						selectedPiece = currTile.getPiece();
+						
+						if (selectedPiece.getColor() == whiteOnTurn) {
+							isSelected = !isSelected;
+							selectedImageX = e.getX()- squareSide/4 - margin;
+							selectedImageY = e.getY()- squareSide/4 - margin;
+						
+						}
+					
 					}
 					
-				} 
 				repaint();
+			
+				} catch (Exception e1) {}
+				
 			}
+			
 		});
 		
 		this.addMouseMotionListener(new MouseMotionListener() {
