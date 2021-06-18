@@ -68,7 +68,7 @@ public class Pawn extends Piece{
 			
 			try {
 			
-				if (!board.getTile(currX, currY - 2).isOccupied() && !isMoved)
+				if (!board.getTile(currX, currY - 2).isOccupied() && !isMoved && !board.getTile(currX, currY - 1).isOccupied())
 					moves.add(board.getTile(currX, currY - 2));
 			
 			} catch (Exception e) {}
@@ -118,7 +118,7 @@ public class Pawn extends Piece{
 		
 		try {
 			
-			if (!board.getTile(currX, currY + 2).isOccupied() && !isMoved)
+			if (!board.getTile(currX, currY + 2).isOccupied() && !isMoved && !board.getTile(currX, currY + 1).isOccupied())
 				moves.add(board.getTile(currX, currY + 2));
 		
 		} catch (Exception e) {}
