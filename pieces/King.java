@@ -127,7 +127,7 @@ public class King extends Piece {
 				
 				try {
 				
-					if ((!board.getTile(currX + j, currY + i).isOccupied() || board.getTile(currX + j, currY + i).getPiece().getColor() != this.color))// && !board.isTileUnderAttack(currX + j, currY + i, this.color))
+					if ((!board.getTile(currX + j, currY + i).isOccupied() || board.getTile(currX + j, currY + i).getPiece().getColor() != this.color) && !board.isTileUnderAttack(currX + j, currY + i, this.color))
 						moves.add(board.getTile(currX + j, currY + i));
 					
 				} catch (Exception e) {}
