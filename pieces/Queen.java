@@ -7,6 +7,7 @@ import java.util.HashSet;
 import javax.imageio.ImageIO;
 
 import board.Board;
+import board.EmptyTile;
 import board.Tile;
 
 public class Queen extends Piece{

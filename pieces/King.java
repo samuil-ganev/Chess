@@ -12,7 +12,7 @@ import board.Tile;
 
 public class King extends Piece {
 	
-	boolean isMoved;
+	public boolean isMoved;
 	
 	public King (Tile tile, boolean color, Board board, String name) {
 		super(tile, color, board, name);
@@ -38,7 +38,7 @@ public class King extends Piece {
 		}
 	}
 	
-	public boolean isCastelingPossible(boolean color, boolean type) {
+	public boolean isCastlingPossible(boolean color, boolean type) {
 		
 		if (!type) {
 			
@@ -78,7 +78,7 @@ public class King extends Piece {
 			
 			if (color) {
 				
-				if (!board.getPiece(7, 7).isMoved) {
+				if (board.isOccupied(7, 7) && !board.getPiece(7, 7).isMoved) {
 					
 					for (int i=1;i<3;++i) {
 						
@@ -138,7 +138,7 @@ public class King extends Piece {
 		
 		if (!isMoved) {
 			
-			if (isCastelingPossible(this.color, false)) {
+			if (isCastlingPossible(this.color, false)) {
 				
 				if (this.color)
 					moves.add(board.getTile(1, 7));
@@ -147,7 +147,7 @@ public class King extends Piece {
 				
 			}
 			
-			if (isCastelingPossible(this.color, true)) {
+			if (isCastlingPossible(this.color, true)) {
 				
 				if (this.color)
 					moves.add(board.getTile(6, 7));

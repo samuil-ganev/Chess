@@ -10,6 +10,7 @@ public abstract class Piece {
 	public String name;
 	Tile tile;
 	boolean color;
+	public boolean isMoved = false;
 	Board board;
 	Image img;
 

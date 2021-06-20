@@ -3,51 +3,55 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import board.Board;
 import board.EmptyTile;
 import board.OccupiedTile;
 import board.Tile;
+import pieces.Pawn;
 import pieces.Piece;
+import pieces.Queen;
 
 public class BoardPanel extends JPanel{
+	Board board;
+	ArrayList<Piece> capturedPieces = new ArrayList<Piece>();
+	Color dark = new Color (224, 123, 57);
+	Color light = new Color (235, 139, 66);
 	
 	boolean whiteOnTurn = true;
+	boolean prevTurn = whiteOnTurn;
+	boolean gameEnd = false;
 	String MOVE_PATH = "src/resources/sfx/move_sound.wav";
 	String CAPTURE_PATH = "src/resources/sfx/capture_sound.wav";
-	int margin = 10;
+	
+	final int margin = 10;
 	double imageRatio = 0.9;
 	int squareSide = (this.getWidth() - 2 * margin) / 8;
+	
 	Piece selectedPiece = null;
 	boolean isSelected = false;
 	int selectedImageX;
 	int selectedImageY;
-	Board board;
-	Color dark = new Color (224, 123, 57);
-	Color light = new Color (235, 139, 66);
 	
 	public BoardPanel () {
 		
 		board = new Board ();
 		
+		
+
 		this.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -56,13 +60,7 @@ public class BoardPanel extends JPanel{
 				int y = e.getY();
 				x = getSquareIndex(x);
 				y = getSquareIndex(y);
-				
-				Tile currTile;
-				
-				try {
-					currTile = board.getTile(x, y);
-				} catch (Exception e2) { return; }
-				
+				Tile currTile = board.getTile(x, y);
 				boolean isOccupied = currTile.isOccupied();
 				if (isSelected) {
 					if (selectedPiece.allowedMoves().contains(currTile)) {
@@ -214,54 +212,43 @@ public class BoardPanel extends JPanel{
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				int x = e.getX();
 				int y = e.getY();
 				x = getSquareIndex(x);
 				y = getSquareIndex(y);
 				
-				try {
-				
-					Tile currTile = board.getTile(x, y);
-					
-					if (!isSelected && currTile.isOccupied()) {
-						
-						selectedPiece = currTile.getPiece();
-						
-						if (selectedPiece.getColor() == whiteOnTurn) {
-							isSelected = !isSelected;
-							selectedImageX = e.getX()- squareSide/4 - margin;
-							selectedImageY = e.getY()- squareSide/4 - margin;
-						
-						}
-					
+				Tile currTile = board.getTile(x, y);
+				if (!isSelected && currTile.isOccupied()) {
+					selectedPiece = currTile.getPiece();
+					if (selectedPiece.getColor() == whiteOnTurn) {
+						isSelected = !isSelected;
+						selectedImageX = e.getX()- squareSide/4 - margin;
+						selectedImageY = e.getY()- squareSide/4 - margin;
 					}
 					
+				} 
 				repaint();
-			
-				} catch (Exception e1) {}
-				
 			}
-			
 		});
 		
 		this.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
@@ -280,6 +267,10 @@ public class BoardPanel extends JPanel{
 		
 	}
 	
+	private int getSquareIndex (int dimension) {
+		return (dimension - margin)/squareSide;
+	}
+	
 	private void drawPieces (Graphics g) {
 		if (isSelected) {
 			for (Tile tile : selectedPiece.allowedMoves()) {
@@ -291,8 +282,8 @@ public class BoardPanel extends JPanel{
 			Image selectedImg = selectedPiece.getImage();
 			Image newSelectedImg = selectedImg.getScaledInstance((int) (imageRatio * squareSide), (int) (imageRatio * squareSide), Image.SCALE_DEFAULT);
 			g.drawImage(newSelectedImg, selectedImageX, selectedImageY, this);
-			
 		}
+		
 		
 		
 		for (int i = 0; i < 8; ++i ) {
@@ -322,17 +313,7 @@ public class BoardPanel extends JPanel{
 	
 	}
 	
-	private int getSquareIndex (int dimension) {
-		return (dimension - margin)/squareSide;
-	}
-	
-	public boolean isWhiteOnTurn () {
-		return whiteOnTurn;
-	}
-	
-	@Override
-	protected void paintComponent (Graphics g) {
-		
+	private void drawBoard (Graphics g) {
 		if (this.getHeight() > this. getWidth())
 			squareSide = (this.getWidth() - 2 * margin) / 8;
 		else
@@ -355,9 +336,15 @@ public class BoardPanel extends JPanel{
 			}
 			
 		}
-		
+	}
+	
+	public boolean isWhiteOnTurn() {
+		return whiteOnTurn;
+	}
+	
+	@Override
+	protected void paintComponent (Graphics g) {
+		drawBoard(g);
 		drawPieces(g);
-		
-		
 	}
 }
