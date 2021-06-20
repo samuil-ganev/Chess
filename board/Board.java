@@ -92,16 +92,266 @@ public class Board {
 	}
 	
 	public boolean isTileUnderAttack (int x, int y, boolean color) {
-		for(int i = 0; i < 8; ++i) {
-			for(int j = 0; j < 8; ++j) {
-				if(tiles[i][j].isOccupied() && !color) {
-					Piece currPiece = tiles[i][j].getPiece();
-					if(currPiece.allowedMoves().contains(tiles[y][x])) {
-						return true;
+		
+		int a = x, b = y;
+			
+		while (true) {
+			
+			--a; --b;
+				
+			try {
+					
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Bishop || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
 					}
+					
+						
 				}
-			}
+				
+			} catch (Exception e) { break; }
+			
 		}
+		
+		a = x; b = y;
+		
+		while (true) {
+			
+			++a; --b;
+			
+			try {
+					
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Bishop || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
+					}
+					
+						
+				}
+				
+			} catch (Exception e) { break; }
+			
+		}
+		
+		a = x; b = y;
+		
+		while (true) {
+			
+			--a; ++b;
+			
+			try {
+					
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Bishop || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
+					}
+					
+						
+				}
+				
+			} catch (Exception e) { break; }
+			
+		}
+		
+		a = x; b = y;
+		
+		while (true) {
+			
+			++a; ++b;
+			
+			try {
+					
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Bishop || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
+					}
+					
+						
+				}
+				
+			} catch (Exception e) { break; }
+			
+		}
+		
+		a = x; b = y;
+		
+		while (true) {
+			
+			++a;
+			
+			try {
+				
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Rook || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
+					}
+					
+						
+				}
+				
+			} catch (Exception e) { break; }
+			
+		}
+		
+		a = x; b = y;
+		
+		while (true) {
+			
+			--a;
+			
+			try {
+				
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Rook || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
+					}
+					
+						
+				}
+				
+			} catch (Exception e) { break; }
+			
+		}
+		
+		a = x; b = y;
+		
+		while (true) {
+			
+			++b;
+			
+			try {
+				
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Rook || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
+					}
+					
+						
+				}
+				
+			} catch (Exception e) { break; }
+			
+		}
+		
+		a = x; b = y;
+		
+		while (true) {
+			
+			--b;
+			
+			try {
+				
+				Tile currTile = tiles[b][a];
+					
+				if (currTile.isOccupied()) {
+						
+					if (currTile.getPiece().getColor() == color) {
+						break;
+					} else {
+						
+						if (currTile.getPiece() instanceof Rook || currTile.getPiece() instanceof Queen)
+							if (currTile.getPiece().allowedMoves().contains(tiles[y][x]))
+								return true;
+						else
+							break;
+						
+					}
+					
+						
+				}
+				
+			} catch (Exception e) { break; }
+			
+		}
+		
+		try { if (tiles[x - 1][y + 2].getPiece().getColor() != color && tiles[x - 1][y + 2].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		try { if (tiles[x + 1][y + 2].getPiece().getColor() != color && tiles[x + 1][y + 2].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		try { if (tiles[x - 1][y - 2].getPiece().getColor() != color && tiles[x - 1][y - 2].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		try { if (tiles[x + 1][y - 2].getPiece().getColor() != color && tiles[x + 1][y - 2].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		try { if (tiles[x - 2][y + 1].getPiece().getColor() != color && tiles[x - 2][y + 1].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		try { if (tiles[x + 2][y + 1].getPiece().getColor() != color && tiles[x + 2][y + 1].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		try { if (tiles[x - 2][y - 1].getPiece().getColor() != color && tiles[x - 2][y - 1].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		try { if (tiles[x + 2][y - 1].getPiece().getColor() != color && tiles[x + 2][y - 1].getPiece() instanceof Knight) return true; } catch (Exception e) {}
+		
 		return false;
+			
 	}
+	
 }
